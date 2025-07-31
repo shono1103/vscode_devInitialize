@@ -1,0 +1,17 @@
+{
+    // コードフォーマッター
+    "editor.defaultFormatter": "ms-vscode.cpptools",   // C/C++のデフォルトフォーマッター
+
+    // C/C++ 拡張機能の設定 (c_cpp_properties.json にも関連)
+    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+
+    // Code Runner の設定 (Code Runner 拡張機能を使用している場合)
+    "code-runner.runInTerminal": true,         // ターミナルで実行する
+    "code-runner.executorMap": {
+        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $fileNameWithoutExt",
+        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $fileNameWithoutExt"
+    },
+    "code-runner.saveFileBeforeRun": true,     // 実行前にファイルを保存
+}

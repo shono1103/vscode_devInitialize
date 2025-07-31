@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C/C++: (gdb) 起動",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/a.out", // 実行可能ファイルのパス
+            "args": [],                          // プログラムに渡す引数
+            "stopAtEntry": true,                 // プログラムの開始時に停止するか
+            "cwd": "${workspaceFolder}",         // 作業ディレクトリ
+            "environment": [],                   // 環境変数
+            "externalConsole": false,            // 外部コンソールを使用するか
+            "MIMode": "gdb",                     // デバッガの種類
+            "miDebuggerPath": "/usr/bin/gdb",    // デバッガのパス
+            "setupCommands": [
+                {
+                    "description": "gdb の再フォーマットを有効にする",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build_with_make" // デバッグ前に実行するタスク (tasks.jsonで定義)
+        }
+    ]
+}

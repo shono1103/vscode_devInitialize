@@ -1,0 +1,30 @@
+{
+	// 自動保存
+	"files.autoSave": "afterDelay", // 遅延後に自動保存
+	"files.autoSaveDelay": 10000, // 10秒後に自動保存
+	// Git関連 (GitLensなどを使用している場合)
+	"git.autofetch": true, // 自動でリモートの変更をフェッチ
+	"git.enableCommitSigning": false, // コミット署名を無効にする（必要に応じて有効に）
+	// makefile自動構成
+	"makefile.configureOnOpen": true,
+	// エディタのフォントとサイズ
+	"editor.fontFamily": "Fira Code, Cascadia Code, Consolas, 'Courier New', monospace", // プログラミングに適したフォント（等幅フォント）
+	"editor.fontSize": 14, // フォントサイズ
+	"editor.fontLigatures": true, // 合字を有効にする（Fira Code などを使用する場合）
+	// インデント
+	"editor.tabSize": 4, // タブ幅
+	"editor.insertSpaces": false, // タブキーでスペースを挿入
+	"editor.detectIndentation": false, // インデントの自動検出を無効にする（一貫性を保つため）
+	// コードフォーマット
+	"editor.formatOnSave": true, // 保存時にコードをフォーマット
+	// ターミナルの設定
+	"terminal.integrated.fontSize": 14, // 統合ターミナルのフォントサイズ
+	"terminal.integrated.defaultProfile.linux": "bash", // Linuxの場合のデフォルトプロファイル
+	// 視覚的な設定
+	"editor.renderWhitespace": "all", // スペースをすべて表示
+	"editor.renderControlCharacters": true, // 制御文字を表示
+	"editor.cursorBlinking": "smooth", // カーソル点滅スタイル
+	"editor.cursorSmoothCaretAnimation": "on", // カーソル移動アニメーション
+	// ファイルエクスプローラー
+	"explorer.compactFolders": false, // 空のフォルダをコンパクトに表示しない
+}

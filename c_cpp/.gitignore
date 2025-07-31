@@ -1,0 +1,28 @@
+# コンパイル済みバイナリ
+*.out
+*.o
+*.obj
+*.so
+*.a
+*.exe
+*.dll
+
+# デバッグファイル
+*.dSYM/
+*.stackdump
+*.core
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# その他
+*.log
+*.tmp
+*.swp
+*~
+
+# ビルドディレクトリ
+build/

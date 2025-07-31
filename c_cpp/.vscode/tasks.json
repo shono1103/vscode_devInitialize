@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_with_make", // タスクの名前
+            "type": "shell", // シェルコマンドを実行
+            "command": "make", // make コマンドを実行
+            "args": [], // make に渡す引数 (例: "clean", "all" など)
+            "group": {
+                "kind": "build",
+                "isDefault": true // デフォルトのビルドタスクとして設定
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [
+                "$gcc" // make が内部でgccを使用している場合、gccのエラーを検出
+            ],
+            "detail": "Makefileを使用してプロジェクトをビルドします"
+        },
+        {
+            "label": "clean_with_make", // クリーン用のタスク
+            "type": "shell",
+            "command": "make",
+            "args": ["clean"], // make clean を実行
+            "group": "build", // クリーングループに属する
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [], // エラー検出は不要な場合が多い
+            "detail": "Makefileを使用してプロジェクトをクリーンします"
+        }
+    ]
+}
