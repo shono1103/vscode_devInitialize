@@ -26,5 +26,5 @@
 	"editor.cursorBlinking": "smooth", // カーソル点滅スタイル
 	"editor.cursorSmoothCaretAnimation": "on", // カーソル移動アニメーション
 	// ファイルエクスプローラー
-	"explorer.compactFolders": false, // 空のフォルダをコンパクトに表示しない
+	"explorer.compactFolders": false // 空のフォルダをコンパクトに表示しない
 }
