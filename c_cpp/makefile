@@ -6,21 +6,16 @@
 CC = gcc
 
 # コンパイラオプション
-# -Wall: 全ての警告を有効にする
-# -Wextra: 追加の警告を有効にする
-# -g: デバッグ情報を含める (GDBなどでデバッグ可能にする)
-# -O2: 最適化レベル2 (速度優先)
-# -MMD: 依存関係ファイルを自動生成する (詳細は後述)
 CFLAGS = -Wall -Wextra -g -O2 -MMD
 
-# インクルードディレクトリ (ヘッダーファイルがある場所)
+# インクルードディレクトリ
 INC_DIR = -I./include
 
-# リンク時に使用するライブラリ (例: -lm は数学ライブラリをリンク)
-# LDFLAGS = -lm
+# リンク時に使用するライブラリ
+LDFLAGS = -lm
 
 # 実行ファイル名
-TARGET = do_cat
+TARGET = my_program
 
 # cleanターゲットで $(RM) を使う
 RM = rm -f
@@ -29,21 +24,17 @@ RM = rm -f
 SRC_DIR = src
 
 # ビルド成果物 (オブジェクトファイルなど) を格納するディレクトリ
-OBJECTS_DIR = obj # 例
-DEPENDS_DIR = .deps # 例
+OBJECTS_DIR = obj
+DEPENDS_DIR = .deps
 
 # ソースファイルのリスト
-# $(wildcard ディレクトリ/*.c) は指定ディレクトリ内の全ての.cファイルを取得
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 
 # オブジェクトファイルのリスト
-# SRCS の .c を .o に置換し、OBJECTS_DIR に配置
-# $(patsubst %.c, $(OBJECTS_DIR)/%.o, $(notdir $(SRCS)))
-# $(notdir $(SRCS)) は src/main.c -> main.c のようにディレクトリ部分を除去
-OBJS = $(patsubst %.c,$(OBJECTS_DIR)/%.o,$(notdir $(SRCS)))
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJECTS_DIR)/%.o, $(SRCS))
 
-# 依存関係ファイルのリスト (.dファイルは-MMDオプションで自動生成される)
-DEPS = $(patsubst %.o,$(DEPENDS_DIR)/%.d,$(notdir $(OBJS)))
+# 依存関係ファイルのリスト
+DEPS = $(patsubst $(OBJECTS_DIR)/%.o, $(DEPENDS_DIR)/%.d, $(OBJS))
 
 # ==============================================================================
 # デフォルトターゲット (make とだけ実行したときに呼ばれる)
@@ -59,11 +50,15 @@ $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
 # ==============================================================================
-# オブジェクトファイルのコンパイルルール (汎用ルール)
+# オブジェクトファイルのコンパイルルール
 # ==============================================================================
-# %.o: %.c は、全ての .o ファイルは対応する .c ファイルに依存することを示す
-# $(OBJECTS_DIR)/%.o: $(SRC_DIR)/%.c と記述して、特定のディレクトリをターゲットにする方法もある
-$(OBJECTS_DIR)/%.o: $(SRC_DIR)/%.c
+
+# オブジェクトファイルディレクトリを作成するルールを追加
+$(OBJECTS_DIR):
+	@mkdir -p $(OBJECTS_DIR)
+
+# コンパイル前にディレクトリが確実に存在するよう、依存関係を追加
+$(OBJECTS_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJECTS_DIR)
 	@echo "Compiling $<"
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
@@ -73,23 +68,10 @@ $(OBJECTS_DIR)/%.o: $(SRC_DIR)/%.c
 .PHONY: clean # 'clean'はファイルではなくアクションであることを示す
 clean:
 	@echo "Cleaning up..."
-	$(RM) $(TARGET) $(OBJS) $(DEPS)
-	# $(RM) $(TARGET) $(OBJECTS_DIR)/*.o $(DEPENDS_DIR)/*.d # ディレクトリに分ける場合
+	$(RM) $(TARGET)
+	@rm -rf $(OBJECTS_DIR) $(DEPENDS_DIR)
 
 # ==============================================================================
 # 自動生成される依存関係ファイルのインクルード
-# -MMDオプションによって自動生成された.dファイルをMakefileに読み込む
-# これにより、ヘッダーファイルの変更も検知して、必要なソースファイルだけが再コンパイルされる
 # ==============================================================================
 -include $(DEPS)
-
-# ==============================================================================
-# その他 (make help など)
-# ==============================================================================
-.PHONY: help
-help:
-	@echo "Usage:"
-	@echo "  make             - Build the project (default)"
-	@echo "  make all         - Build the project"
-	@echo "  make clean       - Remove compiled files"
-	@echo "  make help        - Show this help message"
